@@ -1,0 +1,8 @@
+{% liquid
+    graphql r = 'contacts/create', args: object
+  
+    assign object = r.record_create
+    hash_assign object['valid'] = true
+  
+    return object
+  %}

@@ -1,0 +1,10 @@
+{% parse_json contact %}
+    {
+      "email": {{ object.email | downcase | json }},
+      "body": {{ object.body | json }}
+    }
+  {% endparse_json %}
+  
+  {% liquid
+    return contact
+  %}

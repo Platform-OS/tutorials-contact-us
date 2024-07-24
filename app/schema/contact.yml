@@ -1,0 +1,3 @@
+properties:
+- name: email
+- name: body

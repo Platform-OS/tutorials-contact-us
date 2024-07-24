@@ -1,0 +1,16 @@
+mutation contact_create($email: String!, $body: String!) {
+  record_create(
+    record: {
+      table: "contact"
+      properties: [
+        { name: "email", value: $email }
+        { name: "body", value: $body }
+      ]
+    }
+  ) {
+    id
+    email: property(name: "email")
+    body: property(name: "body")
+    created_at
+  }
+}

@@ -1,0 +1,13 @@
+{% log event, type: "this is an event from the notify submitted consumer!" %}
+{% parse_json object %}
+    {
+      "to":      "{{ event.email }}",
+      "from":    "noreply@platformos.com",
+      "cc": [],
+      "bcc": [],
+      "subject": "Your request has been submitted",
+      "partial": "emails/contacts/notify_submitter",
+      "data": {}
+    }
+  {% endparse_json %}
+  {% function _ = 'modules/core/lib/commands/email/send', object: object %}

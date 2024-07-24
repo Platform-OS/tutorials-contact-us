@@ -1,0 +1,15 @@
+---
+method: post
+---
+{% function contact = 'commands/contacts/create', object: context.params.contact %}
+{% if contact.valid %}
+  {% log contact, type: 'contact after valid' %}
+  {% assign event_object = '{}' | parse_json | hash_merge: id: contact.id %}
+  {% hash_assign event_object["email"] = contact.email %}
+  {% log event_object, type: 'event object' %}
+  {% function _ = 'modules/core/commands/events/publish', type: 'contact_created', object: event_object %}
+  {% redirect_to '/contacts/thanks' %}
+{% else %}
+  {% render 'contacts/form', contact: contact %}
+{% endif %}
+

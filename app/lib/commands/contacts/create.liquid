@@ -1,0 +1,11 @@
+{% liquid
+    function object = 'commands/contacts/create/build', object: object
+    function object = 'commands/contacts/create/check', object: object
+   
+    if object.valid
+      function object = 'commands/contacts/create/execute', object: object
+      function _ = 'modules/core/commands/events/publish', type: 'contact_created', object: object
+    endif
+   
+    return object
+   %}
