@@ -1,110 +1,19 @@
-<!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f9;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-      .contact-container {
-        text-align: center;
-      }
-      .contact-form {
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        max-width: 400px;
-        width: 100%;
-        margin: 0 auto;
-      }
-      .contact-form h2 {
-        color: #333;
-        margin-bottom: 20px;
-      }
-      .contact-form div {
-        margin-bottom: 15px;
-      }
-      .contact-form label {
-        display: block;
-        margin-bottom: 5px;
-        color: #555;
-      }
-      .contact-form input[type="text"],
-      .contact-form textarea {
-        width: calc(100% - 20px);
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
-      .contact-form input[type="text"]:focus,
-      .contact-form textarea:focus {
-        border-color: #0056b3;
-        outline: none;
-      }
-      .contact-form textarea {
-        height: 100px;
-        resize: vertical;
-      }
-      .contact-form input[type="submit"] {
-        background-color: #0056b3;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-      .contact-form input[type="submit"]:hover {
-        background-color: #003d82;
-      }
-      .contact-form p {
-        color: #d9534f;
-        margin: 0;
-      }
-      .cat-image {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin-bottom: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="contact-container">
-      <img src="https://static.nofluffjobs.com/companies/logos/original/pos_logo_full_black3x_20210719_104422.png" alt="Cute Cat" class="cat-image">
-      <div class="contact-form">
-        <h2>Contact Us</h2>
-        <form action="/contacts/create" method="post">
-          <input type="hidden" name="authenticity_token" value="{{ context.authenticity_token }}">
-          <div>
-            <label for="email">Email</label>
-            <input type="text" name="contact[email]" id="email" value="{{ contact.email }}">
-            {% if contact.errors.email != blank %}
-              <p>{{ contact.errors.email | join: ', ' }}</p>
-            {% endif %}
-          </div>
-          <div>
-            <label for="body">Message</label>
-            <textarea name="contact[body]" id="body">{{ contact.body }}</textarea>
-            {% if contact.errors.body != blank %}
-              <p>{{ contact.errors.body | join: ', ' }}</p>
-            {% endif %}
-          </div>
-          <input type="submit" value="Send">
-        </form>
-      </div>
-    </div>
-  </body>
-  </html>
+<h2>Contact Us</h2>
+<form action="/contacts/create" method="post">
+  <input type="hidden" name="authenticity_token" value="{{ context.authenticity_token }}"</input>
+  <div>
+      <label for="email">Email</label>
+      <input type="text" name="contact[email]" id="email" value="{{ contact.email }}">
+      {% if contact.errors.email != blank %}
+        <p>{{ contact.errors.email | join: ', ' }}</p>
+      {% endif %}
+  </div>
+  <div>
+    <textarea name="contact[body]">{{ contact.body }}</textarea>
+      {% if contact.errors.body != blank %}
+        <p>{{ contact.errors.body | join: ', ' }}</p>
+      {% endif %}
+  </div>
+  <input type="submit" value="Send">
+</form>
   
