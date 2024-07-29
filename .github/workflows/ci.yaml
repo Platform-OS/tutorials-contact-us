@@ -73,7 +73,8 @@ jobs:
           set -e
           ./seed.sh
 
-      - name: Run E2E tests
+      - uses: Platform-OS/gh-action-run-tc-test@0.0.11
+        name: Run E2E tests
         if: success() || failure() # Run E2E tests even if unit tests fail, this will allow you to get feedback on the E2E tests
         with:
           test-name: e2e-as-defined-in-package-json # This is the name of the script that runs your E2E tests
