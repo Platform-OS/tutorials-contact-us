@@ -12,7 +12,7 @@ jobs:
   reserve-ci-instance: # Reserve an instance
     runs-on: ubuntu-latest
     outputs:
-        mpkit-token: ${{ steps.reserve.outputs.mpkit-token }
+        mpkit-token: ${{ steps.reserve.outputs.mpkit-token }}
         mpkit-url: ${{ steps.reserve.outputs.mpkit-url }}
         report-path: ${{ steps.reserve.outputs.report-path }}
     steps:
