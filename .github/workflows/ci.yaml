@@ -41,7 +41,7 @@ jobs:
         shell: sh
         run: |
           set -eu
-          npm install -g @platform-os/pos-cli
+          npm install -g @platformos/pos-cli
 
       - name: Deploy your project to the reserved instance
         shell: sh
