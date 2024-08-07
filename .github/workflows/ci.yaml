@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Get ci-instance-url
         id: reserve
-        uses: Platform-OS/ci-repository-reserve-instance-url@0.0.9 # Use our custom action to reserve an instance
+        uses: Platform-OS/ci-repository-reserve-instance-url@0.1.0 # Use our custom action to reserve an instance
         with:
           repository-url: https://alex-demo-master.staging.oregon.platform-os.com
           method: reserve
@@ -28,10 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
-      MPKIT_TOKEN: ${{ secrets.MPKIT_TOKEN }}
+      MPKIT_TOKEN: ${{ needs.reserve-ci-instance.outputs.mpkit-token }}
       MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
       POS_CI_REPO_ACCESS_TOKEN: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
-      UPLOAD_HOST: ${{ secrets.UPLOAD_HOST }}
       CI: true
     steps:
       - name: Checkout your repository
@@ -54,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
-      MPKIT_TOKEN: ${{ secrets.MPKIT_TOKEN }}
+      MPKIT_TOKEN: ${{ needs.reserve-ci-instance.outputs.mpkit-token }}
       MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
       REPORT_PATH: ${{ needs.reserve-ci-instance.outputs.report-path }}
       UPLOAD_HOST: ${{ secrets.UPLOAD_HOST }}
@@ -69,19 +68,13 @@ jobs:
           set -eu
           npm run ci:test:unit
 
-      - uses: Platform-OS/gh-action-run-tc-test@0.0.11
-        name: Run E2E tests
-        if: success() || failure() # Run E2E tests even if unit tests fail, this will allow you to get feedback on the E2E tests
-        with:
-          test-name: e2e-as-defined-in-package-json # This is the name of the script that runs your E2E tests
-
   cleanup:
     if: ${{ always() }}
     needs: ["reserve-ci-instance", "deploy", "tests"]
     runs-on: ubuntu-latest
     steps:
       - name: release ci-instance-url
-        uses: Platform-OS/ci-repository-reserve-instance-url@0.0.9 # Use our custom action to release the instance
+        uses: Platform-OS/ci-repository-reserve-instance-url@0.1.0 # Use our custom action to release the instance
         with:
           method: release
           repository-url: https://alex-demo-master.staging.oregon.platform-os.com
