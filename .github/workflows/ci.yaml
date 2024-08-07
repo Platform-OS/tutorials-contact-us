@@ -19,7 +19,7 @@ jobs:
         id: reserve
         uses: Platform-OS/ci-repository-reserve-instance-url@0.0.9 # Use our custom action to reserve an instance
         with:
-          repository-url: https://ci-repository.staging.oregon.platform-os.com
+          repository-url: https://alex-demo-master.staging.oregon.platform-os.com
           method: reserve
           pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
 
