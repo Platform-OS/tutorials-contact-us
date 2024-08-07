@@ -12,13 +12,13 @@ jobs:
   reserve-ci-instance: # Reserve an instance
     runs-on: ubuntu-latest
     outputs:
-        mpkit-token: "::add-mask::${{ steps.reserve.outputs.mpkit-token }}"
+        mpkit-token: "${{ steps.reserve.outputs.mpkit-token }}"
         mpkit-url: ${{ steps.reserve.outputs.mpkit-url }}
         report-path: ${{ steps.reserve.outputs.report-path }}
     steps:
       - name: Get ci-instance-url
         id: reserve
-        uses: Platform-OS/ci-repository-reserve-instance-url@0.1.0 # Use our custom action to reserve an instance
+        uses: Platform-OS/ci-repository-reserve-instance-url@mask-token
         with:
           repository-url: https://alex-demo-master.staging.oregon.platform-os.com
           method: reserve
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
-      MPKIT_TOKEN: "${{ needs.reserve-ci-instance.outputs.mpkit-token }}"
+      MPKIT_TOKEN: ${{ needs.reserve-ci-instance.outputs.mpkit-token }}
       MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
       POS_CI_REPO_ACCESS_TOKEN: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
       CI: true
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
-      MPKIT_TOKEN: "${{ needs.reserve-ci-instance.outputs.mpkit-token }}"
+      MPKIT_TOKEN: ${{ needs.reserve-ci-instance.outputs.mpkit-token }}
       MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
       REPORT_PATH: ${{ needs.reserve-ci-instance.outputs.report-path }}
       UPLOAD_HOST: ${{ secrets.UPLOAD_HOST }}
@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: release ci-instance-url
-        uses: Platform-OS/ci-repository-reserve-instance-url@0.1.0 # Use our custom action to release the instance
+        uses: Platform-OS/ci-repository-reserve-instance-url@mask-token
         with:
           method: release
           repository-url: https://alex-demo-master.staging.oregon.platform-os.com
