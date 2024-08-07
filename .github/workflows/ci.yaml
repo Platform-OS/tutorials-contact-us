@@ -37,18 +37,11 @@ jobs:
       - name: Checkout your repository
         uses: actions/checkout@v4
 
-      - name: Build your project
-        shell: sh
-        run: |
-          set -eu
-          npm install
-          npm run build
-
       - name: Deploy your project to the reserved instance
         shell: sh
         run: |
           set -eu
-          ./seed.sh
+          pos-cli deploy
 
   tests:
     needs: ["reserve-ci-instance", "deploy"] # Don't run this job until both the reserve-ci-instance and deploy jobs are done
@@ -61,17 +54,14 @@ jobs:
       UPLOAD_HOST: ${{ secrets.UPLOAD_HOST }}
       CI: true
     steps:
+      - name: Checkout your repository
+        uses: actions/checkout@v4
+
       - name: Run unit tests
         shell: sh
         run: |
           set -eu
           npm run ci:test:unit
-
-      - name: Clean up after unit tests and prepare environment for E2E tests
-        shell: sh
-        run: |
-          set -e
-          ./seed.sh
 
       - uses: Platform-OS/gh-action-run-tc-test@0.0.11
         name: Run E2E tests
