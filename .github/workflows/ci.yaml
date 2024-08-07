@@ -37,6 +37,12 @@ jobs:
       - name: Checkout your repository
         uses: actions/checkout@v4
 
+      - name: Install pos-cli
+        shell: sh
+        run: |
+          set -eu
+          npm install -g @platform-os/pos-cli
+
       - name: Deploy your project to the reserved instance
         shell: sh
         run: |
