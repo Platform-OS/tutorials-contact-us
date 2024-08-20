@@ -88,11 +88,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: release ci-instance-url
-<<<<<<< HEAD
         uses: Platform-OS/ci-repository-reserve-instance-url@mask-token
-=======
-        uses: Platform-OS/ci-repository-reserve-instance-url@0.1.1 # Use our custom action to release the instance
->>>>>>> main
         with:
           method: release
           repository-url: ${{ vars.CI_REPOSITORY_URL }}
