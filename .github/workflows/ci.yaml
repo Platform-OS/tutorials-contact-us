@@ -44,6 +44,7 @@ jobs:
           MPKIT_TOKEN: ${{ steps.get-token.outputs.mpkit-token }}
         run: |
           echo "::add-mask::$MPKIT_TOKEN"
+          echo "MPKIT_TOKEN=$MPKIT_TOKEN" >> $GITHUB_ENV
 
       - name: Checkout your repository
         uses: actions/checkout@v4
