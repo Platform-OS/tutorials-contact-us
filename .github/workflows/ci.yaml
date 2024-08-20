@@ -46,7 +46,7 @@ jobs:
           TOKEN: "${{ steps.get-token.outputs.MPKIT-TOKEN }}"
         run: |
           echo hide-token
-          echo "${{ env.MPKIT-TOKEN }}"
+          echo "${{ env.TOKEN }}"
 
       - name: Checkout your repository
         uses: actions/checkout@v4
