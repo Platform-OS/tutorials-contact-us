@@ -63,6 +63,7 @@ jobs:
         shell: sh
         run: |
           set -eu
+          pos-cli data clean --auto-confirm --include-schema
           pos-cli deploy
 
   tests:
