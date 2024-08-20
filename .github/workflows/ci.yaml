@@ -37,7 +37,7 @@ jobs:
         uses: Platform-OS/ci-repository-reserve-instance-url@0.1.1 # Use our custom action to reserve an instance
         with:
           method: get-token
-          repository-url: ${{ var.CI_REPOSITORY_URL }}
+          repository-url: ${{ vars.CI_REPOSITORY_URL }}
           pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
       - name: use secret
         run: |
@@ -89,7 +89,7 @@ jobs:
         uses: Platform-OS/ci-repository-reserve-instance-url@0.1.1 # Use our custom action to release the instance
         with:
           method: release
-          repository-url: ${{ var.CI_REPOSITORY_URL }}
+          repository-url: ${{ vars.CI_REPOSITORY_URL }}
           pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
 
   # deploy-qa: # Deploy to QA on push to master and after tests pass
