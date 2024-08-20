@@ -29,7 +29,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
-      MPKIT_TOKEN: ${{ steps.get-token.outputs.mpkit-token }}
       MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
       POS_CI_REPO_ACCESS_TOKEN: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
       CI: true
@@ -43,9 +42,11 @@ jobs:
           pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
 
       - name: use mpkit-token 
+        env:
+          TOKEN: "${{ steps.get-token.outputs.mpkit-token }}"
         run: |
           echo hide-token
-          echo "${{ env.MPKIT_TOKEN }}"
+          echo "${{ env.TOKEN }}"
 
       - name: Checkout your repository
         uses: actions/checkout@v4
@@ -57,6 +58,8 @@ jobs:
           npm install -g @platformos/pos-cli
 
       - name: Deploy your project to the reserved instance
+        env:
+          MPKIT_TOKEN: ${{ steps.get-token.outputs.mpkit-token }}
         shell: sh
         run: |
           set -eu
