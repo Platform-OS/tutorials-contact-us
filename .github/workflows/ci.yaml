@@ -40,9 +40,10 @@ jobs:
           repository-url: ${{ vars.CI_REPOSITORY_URL }}
           pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
       - name: use secret
+        env:
+          TOKEN: "${{ steps.get-token.outputs.mpkit-token }}"
         run: |
           echo hide-token
-          TOKEN=${{ steps.get-token.outputs.mpkit-token }}
           echo "::add-mask::$TOKEN"
           echo "MPKIT_TOKEN=$TOKEN" >> $GITHUB_ENV
 
