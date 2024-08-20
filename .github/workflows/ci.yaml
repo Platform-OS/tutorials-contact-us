@@ -13,9 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     container: alpine:3.15
     outputs:
-        mpkit-token: "${{ steps.reserve.outputs.mpkit-token }}"
-        mpkit-url: ${{ steps.reserve.outputs.mpkit-url }}
-        report-path: ${{ steps.reserve.outputs.report-path }}
+      mpkit-token: ${{ steps.reserve.outputs.mpkit-token }}
+      mpkit-url: ${{ steps.reserve.outputs.mpkit-url }}
+      report-path: ${{ steps.reserve.outputs.report-path }}
     steps:
       - name: Get ci-instance-url
         id: reserve
