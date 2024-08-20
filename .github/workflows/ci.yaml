@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     container: alpine:3.15
     outputs:
-      mpkit-token: ${{ steps.reserve.outputs.mpkit-token }}
       mpkit-url: ${{ steps.reserve.outputs.mpkit-url }}
       report-path: ${{ steps.reserve.outputs.report-path }}
     steps:
@@ -21,7 +20,7 @@ jobs:
         id: reserve
         uses: Platform-OS/ci-repository-reserve-instance-url@mask-token
         with:
-          repository-url: https://alex-demo-master.staging.oregon.platform-os.com
+          repository-url: ${{ vars.CI_REPOSITORY_URL }}
           method: reserve
           pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
 
@@ -30,11 +29,25 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
-      MPKIT_TOKEN: ${{ needs.reserve-ci-instance.outputs.mpkit-token }}
       MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
       POS_CI_REPO_ACCESS_TOKEN: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
       CI: true
     steps:
+      - name: get-mpkit-token
+        id: get-token
+        uses: Platform-OS/ci-repository-reserve-instance-url@mask-token
+        with:
+          method: get-token
+          repository-url: ${{ vars.CI_REPOSITORY_URL }}
+          pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
+
+      - name: use mpkit-token 
+        env:
+          TOKEN: "${{ steps.get-token.outputs.MPKIT-TOKEN }}"
+        run: |
+          echo hide-token
+          echo "${{ env.MPKIT-TOKEN }}"
+
       - name: Checkout your repository
         uses: actions/checkout@v4
 
@@ -55,10 +68,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
-      MPKIT_TOKEN: ${{ needs.reserve-ci-instance.outputs.mpkit-token }}
       MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
       REPORT_PATH: ${{ needs.reserve-ci-instance.outputs.report-path }}
-      UPLOAD_HOST: ${{ secrets.UPLOAD_HOST }}
+      UPLOAD_HOST: ${{ vars.TEST_REPORTS_UPLOAD_HOST }}
       CI: true
     steps:
       - name: Checkout your repository
@@ -76,10 +88,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: release ci-instance-url
+<<<<<<< HEAD
         uses: Platform-OS/ci-repository-reserve-instance-url@mask-token
+=======
+        uses: Platform-OS/ci-repository-reserve-instance-url@0.1.1 # Use our custom action to release the instance
+>>>>>>> main
         with:
           method: release
-          repository-url: https://alex-demo-master.staging.oregon.platform-os.com
+          repository-url: ${{ vars.CI_REPOSITORY_URL }}
           pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
 
   # deploy-qa: # Deploy to QA on push to master and after tests pass
