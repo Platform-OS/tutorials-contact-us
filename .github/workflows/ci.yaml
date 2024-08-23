@@ -73,7 +73,7 @@ jobs:
           cd -
           rm -rf /tmp/allow-data-clean
 
-          export CONFIRMATION_TEXT=${MPKIT_URL/https:\/\//}
+          export CONFIRMATION_TEXT=$(echo "$MPKIT_URL" | sed 's|https://||')
           pos-cli data clean --auto-confirm --include-schema
           pos-cli deploy
 
