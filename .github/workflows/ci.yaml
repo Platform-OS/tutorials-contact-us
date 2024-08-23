@@ -57,12 +57,31 @@ jobs:
           set -eu
           npm install -g @platformos/pos-cli
 
+      - name: Enable data clean on instance
+        env:
+          MPKIT_TOKEN: ${{ steps.get-token.outputs.mpkit-token }}
+        shell: sh
+        run: |
+          set -eu
+          mkdir -p /tmp/allow-data-clean/app
+          cp app/config.yml /tmp/allow-data-clean/app
+
+          cd /tmp/allow-data-clean
+          echo 'allow_data_clean: true' >> app/config.yml
+
+          pos-cli data clean --auto-confirm --include-schema
+
+          pos-cli deploy -p
+          cd -
+          rm -rf /tmp/allow-data-clean
+
       - name: Deploy your project to the reserved instance
         env:
           MPKIT_TOKEN: ${{ steps.get-token.outputs.mpkit-token }}
         shell: sh
         run: |
           set -eu
+          export CONFIRMATION_TEXT=${MPKIT_URL/https:\/\//}
           pos-cli data clean --auto-confirm --include-schema
           pos-cli deploy
 
