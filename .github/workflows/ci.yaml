@@ -69,8 +69,6 @@ jobs:
           cd /tmp/allow-data-clean
           echo 'allow_data_clean: true' >> app/config.yml
 
-          pos-cli data clean --auto-confirm --include-schema
-
           pos-cli deploy -p
           cd -
           rm -rf /tmp/allow-data-clean
