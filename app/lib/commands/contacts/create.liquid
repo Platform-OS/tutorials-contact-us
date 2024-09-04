@@ -4,7 +4,7 @@
    
     if object.valid
       function object = 'commands/contacts/create/execute', object: object
-      function _ = 'modules/core/commands/events/publish', type: 'contact_created', object: object
+      function _ = 'modules/core/commands/events/publish', type: 'contact_created', object: object, delay: null, max_attempts: null
     endif
    
     return object
