@@ -41,13 +41,6 @@ jobs:
           method: get-token
           repository-url: ${{ vars.CI_REPOSITORY_URL }}
           pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
-      #
-      # - name: use mpkit-token
-      #   env:
-      #     TOKEN: "${{ steps.get-token.outputs.mpkit-token }}"
-      #   run: |
-      #     echo hide-token
-      #     echo "${{ env.TOKEN }}"
 
       - name: Checkout your repository
         uses: actions/checkout@v4
