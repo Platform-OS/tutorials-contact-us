@@ -96,7 +96,7 @@ jobs:
         shell: sh
         run: |
           set -eu
-          npm run ci:test:unit
+          npm run test
 
   cleanup:
     if: ${{ always() }}
