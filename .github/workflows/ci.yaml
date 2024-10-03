@@ -97,6 +97,8 @@ jobs:
         run: |
           set -eu
           npm run test
+        env:
+          HOME: /root
 
   cleanup:
     if: ${{ always() }}
