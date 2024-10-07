@@ -1,11 +1,14 @@
 {% liquid
     function object = 'commands/contacts/create/build', object: object
     function object = 'commands/contacts/create/check', object: object
-   
+
     if object.valid
       function object = 'commands/contacts/create/execute', object: object
-      function _ = 'modules/core/commands/events/publish', type: 'contact_created', object: object, delay: null, max_attempts: null
+      assign event_object = '{}' | parse_json | hash_merge: id: object.id
+      hash_assign event_object["email"] = object.email
+      log event_object, type: 'event object'
+      function _ = 'modules/core/commands/events/publish', type: 'contact_created', object: event_object, delay: null, max_attempts: null
     endif
-   
+
     return object
    %}
