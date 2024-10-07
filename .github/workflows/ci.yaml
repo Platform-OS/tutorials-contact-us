@@ -1,5 +1,5 @@
 name: CI
-on: # Trigger the workflow on push to main, pull request to main, or manual trigger
+on:
   push:
     branches:
       - main
@@ -9,62 +9,66 @@ on: # Trigger the workflow on push to main, pull request to main, or manual trig
   workflow_dispatch:
 
 jobs:
-  reserve-ci-instance: # Reserve an instance
+  reserve-ci-instance:
     runs-on: ubuntu-latest
+    container: alpine:3.20
     outputs:
-        mpkit-url: ${{ steps.reserve.outputs.mpkit-url }}
-        report-path: ${{ steps.reserve.outputs.report-path }}
+      mpkit-url: ${{ steps.reserve.outputs.mpkit-url }}
+      report-path: ${{ steps.reserve.outputs.report-path }}
     steps:
       - name: Get ci-instance-url
         id: reserve
-        uses: Platform-OS/ci-repository-reserve-instance-url@0.1.1 # Use our custom action to reserve an instance
+        uses: Platform-OS/ci-repository-reserve-instance-url@mask-token
         with:
           repository-url: ${{ vars.CI_REPOSITORY_URL }}
           method: reserve
           pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
 
   deploy:
-    needs: ["reserve-ci-instance"] # Don't run this job until the reserve-ci-instance job is done
+    needs: ["reserve-ci-instance"]
     runs-on: ubuntu-latest
+    container: platformos/playwright:5.1.5-1.47.2
     env:
       MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
       MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
       POS_CI_REPO_ACCESS_TOKEN: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
       CI: true
     steps:
-      - name: get-mpkit-token
+      - name: Get MPKIT token
         id: get-token
-        uses: Platform-OS/ci-repository-reserve-instance-url@0.1.1 # Use our custom action to reserve an instance
+        uses: Platform-OS/ci-repository-reserve-instance-url@mask-token
         with:
           method: get-token
           repository-url: ${{ vars.CI_REPOSITORY_URL }}
           pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
-      - name: use secret
-        env:
-          TOKEN: "${{ steps.get-token.outputs.mpkit-token }}"
-        run: |
-          echo hide-token
-          echo "::add-mask::$TOKEN"
-          echo "MPKIT_TOKEN=$TOKEN" >> $GITHUB_ENV
 
       - name: Checkout your repository
         uses: actions/checkout@v4
 
-      - name: Install pos-cli
-        shell: sh
-        run: |
-          set -eu
-          npm install -g @platformos/pos-cli
-
       - name: Deploy your project to the reserved instance
+        env:
+          MPKIT_TOKEN: ${{ steps.get-token.outputs.mpkit-token }}
         shell: sh
         run: |
           set -eu
+          mkdir -p /tmp/allow-data-clean/app
+          cp app/config.yml /tmp/allow-data-clean/app
+
+          cd /tmp/allow-data-clean
+          echo 'allow_data_clean: true' >> app/config.yml
+
+          pos-cli deploy -p
+          cd -
+          rm -rf /tmp/allow-data-clean
+
+          export CONFIRMATION_TEXT=$(echo "$MPKIT_URL" | sed 's|https://||')
+          pos-cli data clean --auto-confirm --include-schema
           pos-cli deploy
 
   tests:
-    needs: ["reserve-ci-instance", "deploy"] # Don't run this job until both the reserve-ci-instance and deploy jobs are done
+    needs: ["reserve-ci-instance", "deploy"]
     runs-on: ubuntu-latest
+    container: platformos/playwright:5.1.5-1.47.2
     env:
       MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
       MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
@@ -75,19 +79,22 @@ jobs:
       - name: Checkout your repository
         uses: actions/checkout@v4
 
-      - name: Run unit tests
+      - name: Run e2e tests
         shell: sh
         run: |
           set -eu
-          npm run ci:test:unit
+          npm run test
+        env:
+          HOME: /root
 
   cleanup:
     if: ${{ always() }}
     needs: ["reserve-ci-instance", "deploy", "tests"]
     runs-on: ubuntu-latest
+    container: alpine:3.20
     steps:
       - name: release ci-instance-url
-        uses: Platform-OS/ci-repository-reserve-instance-url@0.1.1 # Use our custom action to release the instance
+        uses: Platform-OS/ci-repository-reserve-instance-url@mask-token
         with:
           method: release
           repository-url: ${{ vars.CI_REPOSITORY_URL }}
