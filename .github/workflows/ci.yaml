@@ -20,7 +20,8 @@ jobs:
         id: reserve
         uses: Platform-OS/ci-repository-reserve-instance-url@mask-token
         with:
-          repository-url: ${{ vars.CI_REPOSITORY_URL }}
+          # repository-url: ${{ vars.CI_REPOSITORY_URL }}
+          repository-url: https://demo-pool-main.platformos.dev
           method: reserve
           pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
 
@@ -39,7 +40,8 @@ jobs:
         uses: Platform-OS/ci-repository-reserve-instance-url@mask-token
         with:
           method: get-token
-          repository-url: ${{ vars.CI_REPOSITORY_URL }}
+          # repository-url: ${{ vars.CI_REPOSITORY_URL }}
+          repository-url: https://demo-pool-main.platformos.dev
           pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
 
       - name: Checkout your repository
@@ -97,7 +99,8 @@ jobs:
         uses: Platform-OS/ci-repository-reserve-instance-url@mask-token
         with:
           method: release
-          repository-url: ${{ vars.CI_REPOSITORY_URL }}
+          # repository-url: ${{ vars.CI_REPOSITORY_URL }}
+          repository-url: https://demo-pool-main.platformos.dev
           pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
 
   # deploy-qa: # Deploy to QA on push to master and after tests pass
