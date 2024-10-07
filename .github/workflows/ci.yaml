@@ -23,7 +23,7 @@ jobs:
           # repository-url: ${{ vars.CI_REPOSITORY_URL }}
           repository-url: https://demo-pool-main.platformos.dev
           method: reserve
-          pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
+          pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN2 }}
 
   deploy:
     needs: ["reserve-ci-instance"]
@@ -32,7 +32,7 @@ jobs:
     env:
       MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
       MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
-      POS_CI_REPO_ACCESS_TOKEN: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
+      POS_CI_REPO_ACCESS_TOKEN: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN2 }}
       CI: true
     steps:
       - name: Get MPKIT token
@@ -42,7 +42,7 @@ jobs:
           method: get-token
           # repository-url: ${{ vars.CI_REPOSITORY_URL }}
           repository-url: https://demo-pool-main.platformos.dev
-          pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
+          pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN2 }}
 
       - name: Checkout your repository
         uses: actions/checkout@v4
@@ -101,7 +101,7 @@ jobs:
           method: release
           # repository-url: ${{ vars.CI_REPOSITORY_URL }}
           repository-url: https://demo-pool-main.platformos.dev
-          pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
+          pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN2 }}
 
   # deploy-qa: # Deploy to QA on push to master and after tests pass
   #   if: ${{ github.ref_name == 'master' }}
