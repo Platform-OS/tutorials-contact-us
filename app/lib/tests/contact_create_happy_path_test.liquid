@@ -1,0 +1,27 @@
+{% comment %}
+  Test: Valid input - should be considered valid
+{% endcomment %}
+
+{% liquid
+  assign data = '{ "email": "USER@example.com", "body": "This is a valid message body." }' | parse_json
+  function contact = 'commands/contacts/create', object: data
+
+  # 1. Contact should be valid
+  function contract = 'modules/tests/assertions/valid_object', contract: contract, object: contact, field_name: 'contact'
+
+  # 2. Email should be downcased
+  assign expected_email = 'user@example.com'
+  assign given_email = contact.email
+  function contract = 'modules/tests/assertions/equal', contract: contract, expected: expected_email, given: given_email, field_name: 'contact.email'
+
+  # 3. Body should match
+  assign expected_body = 'This is a valid message body.'
+  assign given_body = contact.body
+  function contract = 'modules/tests/assertions/equal', contract: contract, expected: expected_body, given: given_body, field_name: 'contact.body'
+
+  # 4: Assert the contact.valid is true
+  function contract = 'modules/tests/assertions/true', contract: contract, object: contact, field_name: 'valid'
+
+  # 5: Errors should be blank
+  function contract = 'modules/tests/assertions/blank', contract: contract, object: contact, field_name: 'errors'
+%}
