@@ -83,3 +83,15 @@
   function contract = 'modules/tests/assertions/presence', contract: contract, object: contact.errors, field_name: 'email'
   function contract = 'modules/tests/assertions/presence', contract: contract, object: contact.errors, field_name: 'body'
 %}
+
+{% comment %}
+  Test: Email with upper case letters and leading/trailing spaces
+{% endcomment %}
+{% liquid
+  assign data = '{ "email": "  User@examplE.com  ", "body": "Nice body here" }' | parse_json
+  function contact = 'commands/contacts/create/build', object: data
+
+  if contact.email != 'user@example.com'
+    function contract = 'modules/tests/helpers/register_error', contract: contract, field_name: 'email', message: 'Email was not trimmed or downcased'
+  endif
+%}
