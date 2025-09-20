@@ -1,19 +1,20 @@
-<h2>Contact Us</h2>
-<form action="/contacts/create" method="post">
-  <input type="hidden" name="authenticity_token" value="{{ context.authenticity_token }}"</input>
-  <div>
-      <label for="email">Email</label>
-      <input type="text" name="contact[email]" id="email" value="{{ contact.email }}">
-      {% if contact.errors.email != blank %}
-        <p>{{ contact.errors.email | join: ', ' }}</p>
-      {% endif %}
-  </div>
-  <div>
-    <textarea name="contact[body]">{{ contact.body }}</textarea>
-      {% if contact.errors.body != blank %}
-        <p>{{ contact.errors.body | join: ', ' }}</p>
-      {% endif %}
-  </div>
-  <input type="submit" value="Send">
+<h2 class="pos-heading-2">Contact Us</h2>
+
+<form class="pos-form pos-form-simple" action="/contacts/create" method="post">
+  <input type="hidden" name="authenticity_token" value="{{ context.authenticity_token }}">
+
+  <fieldset>
+    <label for="email">Email</label>
+    <input id="email" name="contact[email]" type="email" value="{{ contact.email }}" required>
+    {% render 'modules/common-styling/forms/error_list', name: 'email', errors: contact.errors.email %}
+  </fieldset>
+ <fieldset>
+    <label for="message">Message</label>
+    <textarea id="message" name="contact[body]" rows="6" required>{{ contact.body }}</textarea>
+    {% render 'modules/common-styling/forms/error_list', name: 'body', errors: contact.errors.body %}
+ </fieldset>
+<fieldset>
+  <button type="submit" class="pos-button pos-button-primary">Send</button>
+</fieldset>
+
 </form>
-  

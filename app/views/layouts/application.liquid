@@ -1,26 +1,22 @@
-<!DOCTYPE html>
-    <html lang="en" class="pos-app">
-      <head>
-      
-        <meta charset="utf-8">
-        <meta name="description" content="Contact Us. TODO">
+  <!DOCTYPE html>
+<html class="pos-app">
+  <html class="pos-app">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Contact Us form">
+    <title>Contact Us Form</title>
 
-        <title>Style Guide and Components</title>
-    
-        {% render 'modules/common-styling/init', reset: true %}
-        <link rel="stylesheet" href="{{ 'modules/common-styling/style-guide/styleguide.css' | asset_url }}" type="text/css">
-        <script src="{{ 'modules/common-styling/style-guide/styleguide.js' | asset_url }}" defer></script>
-    
-        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
-    
-      </head>
-      <body>
-        
-        {{ content_for_layout }}
+    {%- render 'modules/common-styling/init' -%}
+    <link rel="stylesheet" href="{{ 'variables.css' | asset_url }}">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+  </head>
+  <body>
+    {{ content_for_layout }}
 
-        {% liquid
-          theme_render_rc 'modules/common-styling/toasts'
-        %}
-    
-      </body>
-  </html>
+    {% liquid
+      theme_render_rc 'modules/common-styling/toasts'
+    %}
+
+  </body>
+  
+</html>

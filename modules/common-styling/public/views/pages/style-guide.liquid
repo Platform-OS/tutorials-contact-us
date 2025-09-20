@@ -915,8 +915,12 @@ layout: 'modules/common-styling/style-guide'
           <input type="password" id="styleguide-form-example-b" placeholder="••••••••" required>
         </fieldset>
         <fieldset>
-          <input type="checkbox" id="styleguide-form-example-c" required>
-          <label for="styleguide-form-example-c">An agreement</label>
+          <label for="styleguide-form-example-c">Message</label>
+          <textarea id="styleguide-form-example-c" placeholder="Your message"></textarea>
+        </fieldset>
+        <fieldset>
+          <input type="checkbox" id="styleguide-form-example-d" required>
+          <label for="styleguide-form-example-d">An agreement</label>
         </fieldset>
       </form>
 {% capture code %}{% raw %}
@@ -994,6 +998,28 @@ layout: 'modules/common-styling/style-guide'
         <form action="" class="pos-form styleguide-forms-placeholder-container">
           <fieldset class="styleguide-forms-placeholder-fieldset"></fieldset>
           <fieldset class="styleguide-forms-placeholder-fieldset"></fieldset>
+        </form>
+      </div>
+
+      <div class="styleguide-columns">
+        <div>
+          <dl class="styleguide-details">
+            <dt>Class</dt><dd><code>pos-form-fieldset-combined</code></dd>
+          </dl>
+{% capture code %}{% raw %}
+<fieldset class="pos-form-fieldset-combined">
+  
+</fieldset>
+{% endraw %}{% endcapture %}
+          <div class="styleguide-code">
+            <pre><code>{{ code | lstrip | rstrip }}</code></pre>
+          </div>
+        </div>
+        <form action="" class="pos-form styleguide-forms-placeholder-container">
+          <fieldset class="styleguide-forms-placeholder-fieldset pos-form-fieldset-combined">
+            <div class="styleguide-forms-placeholder-input"></div>
+            <div class="styleguide-forms-placeholder-button"></div>
+          </fieldset>
         </form>
       </div>
 
@@ -1128,6 +1154,65 @@ layout: 'modules/common-styling/style-guide'
           </table>
         </div>
 
+      </div>
+
+      <div id="text-inputs-textarea" class="styleguide-columns">
+
+        <div>
+          <div class="styleguide-example">
+            <textarea class="pos-form-input" placeholder="Textarea"></textarea>
+            <dl class="styleguide-details">
+              <dt>Class</dt><dd><code>pos-form-input</code></dd>
+            </dl>
+          </div>
+      {% capture code %}{% raw %}
+      <textarea class="pos-form-input" placeholder="Textarea"></textarea>
+      {% endraw %}{% endcapture %}
+          <div class="styleguide-code">
+            <pre><code>{{ code | lstrip | rstrip }}</code></pre>
+          </div>
+
+          {% render 'modules/common-styling/tip', content: 'When overwriting the <code>&lt;input&gt;</code> classes, please remember to also overwrite the debug classes used in the style guide: <code>pos-debug-form-input-hover</code>, <code>pos-debug-form-input-focus-visible</code>.' %}
+        </div>
+
+        <div>
+          <table class="styleguide-examples-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Placeholder</th>
+                <th>Filled</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Default</th>
+                <td><textarea class="pos-form-input" placeholder="Textarea"></textarea></td>
+                <td><textarea class="pos-form-input" placeholder="Textarea">Lorem ipsum</textarea></td>
+              </tr>
+              <tr>
+                <th class="styleguide-table-heading">Hover</th>
+                <td><textarea class="pos-form-input pos-debug-form-input-hover" placeholder="Textarea"></textarea></td>
+                <td><textarea class="pos-form-input pos-debug-form-input-hover" placeholder="Textarea">Lorem ipsum</textarea></td>
+              </tr>
+              <tr>
+                <th scope="row">Focused</th>
+                <td><textarea class="pos-form-input pos-debug-form-input-focus-visible" placeholder="Textarea"></textarea></td>
+                <td><textarea class="pos-form-input pos-debug-form-input-focus-visible" placeholder="Textarea">Lorem ipsum</textarea></td>
+              </tr>
+              <tr>
+                <th scope="row">Disabled</th>
+                <td><textarea disabled class="pos-form-input" placeholder="Textarea"></textarea></td>
+                <td><textarea disabled class="pos-form-input" placeholder="Textarea">Lorem ipsum</textarea></td>
+              </tr>
+              <tr>
+                <th scope="row">Error</th>
+                <td><textarea aria-invalid="true" class="pos-form-input" placeholder="Textarea"></textarea></td>
+                <td><textarea aria-invalid="true" class="pos-form-input" placeholder="Textarea">Lorem ipsum</textarea></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
 
@@ -1641,3 +1726,21 @@ render 'modules/common-styling/pagination', count: [total number of pages], acti
     <svg viewBox="0 0 24 24" fill="none" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" class="styleguide-copy-icon-done"><path d="M6.347 24.003a2.95 2.95 0 01-2.36-1.187L.15 17.7a.748.748 0 01.6-1.2c.235 0 .459.112.6.3l3.839 5.118a1.442 1.442 0 001.42.562c.381-.068.712-.281.933-.599L22.636.32a.748.748 0 111.228.86L8.772 22.739a2.93 2.93 0 01-1.9 1.217c-.173.031-.35.047-.525.047z"></path></svg>
   </button>
 </template>
+
+        <div class="pos-popover">
+          <button popovertarget="styleguide-popover2" class="pos-button">
+            Popover example
+          </button>
+          <div popover id="styleguide-popover2">
+            The quick brown fox jumps over the lazy dog
+          </div>
+        </div>
+
+        <div class="pos-popover" style="margin-inline-start: auto;">
+          <button popovertarget="styleguide-popover3" class="pos-button">
+            Popover example
+          </button>
+          <div popover id="styleguide-popover3">
+            The quick brown fox jumps over the lazy dog
+          </div>
+        </div>

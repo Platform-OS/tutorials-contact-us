@@ -543,6 +543,11 @@ p code {
     margin-block-start: var(--pos-gap-text-text)
   }
 
+  .styleguide-forms-placeholder-fieldset.pos-form-fieldset-combined {
+    height: auto;
+    padding: var(--pos-padding-card);
+  }
+
 .styleguide-forms-placeholder-input {
   height: 2rem;
   display: block;
@@ -608,16 +613,29 @@ p code {
   margin-block-start: calc(var(--pos-gap-text-text) / 2);
 }
 
-#text-inputs .styleguide-example {
+#text-inputs .styleguide-example,
+#text-inputs-textarea .styleguide-example {
   display: flex;
   flex-direction: column;
   gap: .5em;
 }
 
-#text-inputs > :last-child {
+#text-inputs > :last-child,
+#text-inputs-textarea > :last-child {
   padding-inline-start: calc(var(--pos-gap-section-section) / 2);
 }
 
-#text-inputs table input {
+#text-inputs table input,
+#text-inputs-textarea table textarea {
   width: 150px;
 }
+
+  .pos-form-fieldset-combined .styleguide-forms-placeholder-input {
+    flex-grow: 1;
+  }
+
+  .pos-form-fieldset-combined .styleguide-forms-placeholder-button {
+    margin: 0;
+    
+    border-inline-start: 3px dotted var(--pos-color-content-background);
+  }
