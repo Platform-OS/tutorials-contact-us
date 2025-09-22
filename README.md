@@ -40,7 +40,49 @@ pos-cli sync staging
 
 ## Using the Tutorial
 
-Follow the step-by-step guide in the [official documentation](https://documentation.platformos.com/get-started/contact-us-tutorial/) to understand how to implement each part of the Contact Us form. When in doubt, check the source code.
+This repository is used in the [Contact Us tutorial](https://documentation.platformos.com/get-started/contact-us-tutorial) on the official platformOS documentation site.
+
+Because the tutorial is written step by step, we provide **checkpoints** as Git tags. Each checkpoint matches the exact state of the codebase at the end of a chapter. This way you can check out only the part of the code that is relevant to the chapter you are following, without being confused by later changes.
+
+### Available checkpoints
+
+* `checkpoint-defining-email` — matches the [Defining the email](https://documentation.platformos.com/get-started/contact-us-tutorial/defining-the-email) chapter
+* `checkpoint-testing` — matches the [Testing](https://documentation.platformos.com/get-started/contact-us-tutorial/testing-contact-create-command) the contact create command chapter
+
+### How to use a checkpoint
+
+1. Clone this repository (if you haven’t already):
+
+   ```bash
+   git clone https://github.com/Platform-OS/tutorials-contact-us.git
+   cd tutorials-contact-us
+   ```
+
+2. Make sure you have all tags:
+
+   ```bash
+   git fetch --tags
+   ```
+
+3. Check out the tag that matches the chapter you are following, for example:
+
+   ```bash
+   git checkout tags/checkpoint-testing
+   ```
+
+This puts your repository into the exact state of the code as it is shown in the documentation chapter.
+You’ll be in a **detached HEAD** state, which is normal for tags. If you want to experiment and make edits, create a branch from that state:
+
+```bash
+git switch -c my-experiments
+```
+
+To return to the latest version of the code on `main`:
+
+```bash
+git checkout main
+git pull
+```
 
 ## Contributing
 
