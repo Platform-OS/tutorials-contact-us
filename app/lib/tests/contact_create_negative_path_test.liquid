@@ -1,0 +1,97 @@
+{% comment %}
+  Test: Invalid email - should be invalid
+{% endcomment %}
+{% liquid
+  assign data = '{ "email": "invalid-email", "body": "This is a valid message body." }' | parse_json
+  function contact = 'commands/contacts/create', object: data
+
+  function contract = 'modules/tests/assertions/not_valid_object', contract: contract, object: contact, field_name: 'contact'
+  function contract = 'modules/tests/assertions/presence', contract: contract, object: contact.errors, field_name: 'email'
+%}
+
+{% comment %}
+  Test: Too short body - should be invalid
+{% endcomment %}
+{% liquid
+  assign data = '{ "email": "user@example.com", "body": "Short" }' | parse_json
+  function contact = 'commands/contacts/create', object: data
+
+  function contract = 'modules/tests/assertions/not_valid_object', contract: contract, object: contact, field_name: 'contact'
+  function contract = 'modules/tests/assertions/presence', contract: contract, object: contact.errors, field_name: 'body'
+%}
+
+{% comment %}
+  Test: Too long body – should be invalid
+{% endcomment %}
+
+{% parse_json data %}
+{
+  "email": "user@example.com",
+  "body": "{{ 201 | random_string }}"
+}
+{% endparse_json %}
+
+{% liquid
+  function contact = 'commands/contacts/create', object: data
+
+  function contract = 'modules/tests/assertions/not_valid_object', contract: contract, object: contact, field_name: 'contact'
+  function contract = 'modules/tests/assertions/presence',          contract: contract, object: contact.errors, field_name: 'body'
+%}
+
+{% comment %}
+  Test: Blank email and body - should be invalid
+{% endcomment %}
+{% liquid
+  assign data = '{ "email": "", "body": "" }' | parse_json
+  function contact = 'commands/contacts/create', object: data
+
+  function contract = 'modules/tests/assertions/not_valid_object', contract: contract, object: contact, field_name: 'contact'
+  function contract = 'modules/tests/assertions/presence', contract: contract, object: contact.errors, field_name: 'email'
+  function contract = 'modules/tests/assertions/presence', contract: contract, object: contact.errors, field_name: 'body'
+%}
+
+{% comment %}
+  Test: Body is missing (null) – should fail validation
+{% endcomment %}
+{% liquid
+  assign data = '{ "email": "user@example.com" }' | parse_json
+  function contact = 'commands/contacts/create', object: data
+
+  function contract = 'modules/tests/assertions/not_valid_object', contract: contract, object: contact, field_name: 'contact'
+  function contract = 'modules/tests/assertions/presence', contract: contract, object: contact.errors, field_name: 'body'
+%}
+
+{% comment %}
+  Test: Email missing from object – should fail validation
+{% endcomment %}
+{% liquid
+  assign data = '{ "body": "This is valid" }' | parse_json
+  function contact = 'commands/contacts/create', object: data
+
+  function contract = 'modules/tests/assertions/not_valid_object', contract: contract, object: contact, field_name: 'contact'
+  function contract = 'modules/tests/assertions/presence', contract: contract, object: contact.errors, field_name: 'email'
+%}
+
+{% comment %}
+  Test: Completely empty object – both fields invalid
+{% endcomment %}
+{% liquid
+  assign data = '{}' | parse_json
+  function contact = 'commands/contacts/create', object: data
+
+  function contract = 'modules/tests/assertions/not_valid_object', contract: contract, object: contact, field_name: 'contact'
+  function contract = 'modules/tests/assertions/presence', contract: contract, object: contact.errors, field_name: 'email'
+  function contract = 'modules/tests/assertions/presence', contract: contract, object: contact.errors, field_name: 'body'
+%}
+
+{% comment %}
+  Test: Email with upper case letters and leading/trailing spaces
+{% endcomment %}
+{% liquid
+  assign data = '{ "email": "  User@examplE.com  ", "body": "Nice body here" }' | parse_json
+  function contact = 'commands/contacts/create/build', object: data
+
+  if contact.email != 'user@example.com'
+    function contract = 'modules/tests/helpers/register_error', contract: contract, field_name: 'email', message: 'Email was not trimmed or downcased'
+  endif
+%}
