@@ -1,13 +1,12 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html class="pos-app">
-  <html class="pos-app">
   <head>
     <meta charset="utf-8">
     <meta name="description" content="Contact Us form">
     <title>Contact Us Form</title>
 
-    {%- render 'modules/common-styling/init' -%}
-    <link rel="stylesheet" href="{{ 'variables.css' | asset_url }}">
+    {% render 'modules/common-styling/init', reset: true %}
+    <link rel="stylesheet" href="{{ 'modules/common-styling/style-guide/styleguide.css' | asset_url }}" type="text/css">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
   </head>
   <body>
@@ -18,5 +17,4 @@
     %}
 
   </body>
-  
 </html>
