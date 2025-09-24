@@ -8,13 +8,14 @@
     <input id="email" name="contact[email]" type="email" value="{{ contact.email }}" required>
     {% render 'modules/common-styling/forms/error_list', name: 'email', errors: contact.errors.email %}
   </fieldset>
- <fieldset>
+
+  <fieldset>
     <label for="message">Message</label>
     <textarea id="message" name="contact[body]" rows="6" required>{{ contact.body }}</textarea>
     {% render 'modules/common-styling/forms/error_list', name: 'body', errors: contact.errors.body %}
- </fieldset>
-<fieldset>
-  <button type="submit" class="pos-button pos-button-primary">Send</button>
-</fieldset>
+  </fieldset>
 
+  <fieldset>
+    <button type="submit" class="pos-button pos-button-primary">Send</button>
+  </fieldset>
 </form>
