@@ -46,8 +46,9 @@ Because the tutorial is written step by step, we provide **checkpoints** as Git 
 
 ### Available checkpoints
 
-* `checkpoint-defining-email` — matches the [Defining the email](https://documentation.platformos.com/get-started/contact-us-tutorial/defining-the-email) chapter
-* `checkpoint-testing` — matches the [Testing](https://documentation.platformos.com/get-started/contact-us-tutorial/testing-contact-create-command) the contact create command chapter
+* `checkpoint-defining-email` — matches the result of [Defining the email](https://documentation.platformos.com/get-started/contact-us-tutorial/defining-the-email) chapter
+* `checkpoint-testing` — matches the result of [Testing](https://documentation.platformos.com/get-started/contact-us-tutorial/testing-contact-create-command) the contact create command chapter
+* `checkpoint-common-styling` - matches the result of [Styling the Form](https://documentation.platformos.com/get-started/contact-us-tutorial/using-common-styling) chapter
 
 ### How to use a checkpoint
 
