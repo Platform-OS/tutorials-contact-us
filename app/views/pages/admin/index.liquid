@@ -1,0 +1,12 @@
+{% liquid
+  function current_profile = 'modules/user/helpers/current_profile'
+  # platformos-check-disable ConvertIncludeToRender, UnreachableCode
+
+  include 'modules/user/helpers/can_do_or_unauthorized', requester: current_profile, do: 'admin_pages.view', redirect_anonymous_to_login: true, forbidden_partial: '403'
+  # platformos-check-enable ConvertIncludeToRender, UnreachableCode
+
+  function contacts = 'queries/contacts/search', limit: 10, params: context.params
+
+  render 'admin/index', contacts: contacts
+%}
+

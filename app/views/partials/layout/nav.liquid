@@ -1,0 +1,29 @@
+{% liquid
+ if context.current_user
+   assign current_profile = context.exports.current_profile
+   unless current_profile
+     function current_profile = 'modules/user/helpers/current_profile'
+   endunless
+ endif
+%}
+<nav id="nav">
+  <a href="/">Home</a>
+  <ul>
+    <li>
+       {% if current_profile %}
+        <li>Welcome, {{ current_profile.email }}</li>
+        {% function can_view_admin = 'modules/user/helpers/can_do', requester: current_profile, do: 'admin_pages.view', access_callback: null, entity: null %}
+        {% if can_view_admin %}
+          <li><a href="/admin">Admin</a></li>
+        {% endif %}
+        <form method="post" action="/sessions">
+          <input type="hidden" name="authenticity_token" value="{{ context.authenticity_token }}">
+          <input type="hidden" name="_method" value="delete">
+          <button class="pos-button" type="submit">Logout</button>
+        </form>
+      {% else %}
+        <a href="/sessions/new">Login</a>
+      {% endif %}
+    </li>
+  </ul>
+</nav>

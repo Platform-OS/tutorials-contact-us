@@ -1,0 +1,25 @@
+query contacts_search($page: Int = 1, $per_page: Int = 20, $keyword: String) {
+  records(
+    page: $page
+    per_page: $per_page
+    filter: {
+      table: { value: "contact" }
+      or: [
+        { properties: [ { name: "email", contains: $keyword } ] }
+        { properties: [ { name: "body", contains: $keyword } ] }
+      ]
+    }
+    sort: [{
+      id: { order: DESC }
+    }]
+  ) {
+    total_pages
+    results {
+      id
+      body: property(name: "body")
+      email: property(name: "email")
+      created_at
+    }
+  }
+}
+

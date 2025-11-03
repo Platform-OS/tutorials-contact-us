@@ -1,7 +1,5 @@
-{% parse_json contact %}
-    {
-      "email": "email@example.com",
-      "body": "Write your message here"
-    }
-    {% endparse_json %}
-    {% render 'contacts/form', contact: contact %}
+{% liquid
+  function profile = 'modules/user/helpers/current_profile'
+
+  render 'contacts/form', contact: null
+%}

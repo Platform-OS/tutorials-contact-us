@@ -7,13 +7,22 @@
 
     {% render 'modules/common-styling/init', reset: true %}
     <link rel="stylesheet" href="{{ 'variables.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'app.css' | asset_url }}">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
   </head>
   <body>
-    {{ content_for_layout }}
+    {% render 'layout/nav' %}
+
+    <div class="container">
+      {{ content_for_layout }}
+    </div>
 
     {% liquid
-      theme_render_rc 'modules/common-styling/toasts'
+      function flash = 'modules/core/commands/session/get', key: 'sflash', clear: null
+      if context.location.pathname != flash.from or flash.force_clear
+        function _ = 'modules/core/commands/session/clear', key: 'sflash'
+      endif
+      render 'modules/common-styling/toasts', params: flash
     %}
   </body>
 </html>
