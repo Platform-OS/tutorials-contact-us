@@ -1,0 +1,55 @@
+<div class="pos-card">
+    <form method="GET" >
+      <fieldset class="pos-form-fieldset-combined">
+          <input type="text" name="keyword" placeholder="Search" class="pos-form-input" value="{{ context.params.keyword }}">
+        <button type="submit" class="pos-button">
+          <span class="pos-label">Search</span>
+          {% render 'modules/common-styling/icon', icon: 'search' %}
+        </button>
+      </fieldset>
+    </form>
+</div>
+<h1 class="pos-heading-1">Contacts</h1>
+<section class="pos-table">
+    <header>
+        <div>ID</div>
+        <div>Email</div>
+        <div>Body</div>
+        <div>Created At</div>
+        <div></div>
+    </header>
+    <div class="pos-table-content pos-card">
+        {% for contact in contacts.results %}
+            <ul>
+                <li>
+                    <span class="pos-table-content-heading">ID</span>
+                    {{ contact.id }}
+                </li>
+                <li>
+                    <span class="pos-table-content-heading">Email</span>
+                    {{ contact.email }}
+                </li>
+                <li>
+                    <span class="pos-table-content-heading">Body</span>
+                    <span title="{{ contact.body }}">{{ contact.body | truncate: 40 }}</span>
+                </li>
+                <li>
+                    <span class="pos-table-content-heading">Created At</span>
+                    {{ contact.created_at | to_time | l: 'long' }}
+                </li>
+                <li>
+                  <form method="post" action="/admin/contacts/{{ contact.id }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                      <input type="hidden" name="authenticity_token" value="{{ context.authenticity_token }}">
+                      <input type="hidden" name="_method" value="delete">
+                      <button class="pos-button" type="submit">
+                        <span class="pos-label">Delete</span>
+                        {% render 'modules/common-styling/icon', icon: 'delete' %}
+                      </button>
+                    </form>
+                    {% if contact.deleted_at %}({{ contact.deleted_at | to_time | l: 'long' }}){% endif %}
+                </li>
+            </ul>
+        {% endfor %}
+    </div>
+</section>
+{% render 'modules/common-styling/pagination', total_pages: contacts.total_pages %}

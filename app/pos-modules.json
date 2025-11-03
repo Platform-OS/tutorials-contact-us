@@ -1,6 +1,7 @@
 {
   "modules": {
     "core": "1.5.2",
-    "common-styling": "1.29.0"
+    "common-styling": "1.32.0",
+    "user": "5.1.1"
   }
 }

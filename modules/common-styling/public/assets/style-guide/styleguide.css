@@ -9,6 +9,10 @@
   gap: calc(var(--pos-padding-page) * 5);
 }
 
+article {
+  scroll-margin: var(--pos-padding-page);
+}
+
 article + article {
   margin-block-start: var(--pos-gap-section-section);
 }
@@ -119,8 +123,10 @@ p code {
   }
 
   .styleguide-copy .styleguide-button-label {
+    width: 100%;
+    height: 100%;
     position: absolute;
-    inset-inline-start: -100vw;
+    inset-inline-start: -300vw;
   }
 
   .styleguide-copy svg {
@@ -364,6 +370,7 @@ p code {
 }
 
 #icons li {
+  width: 94px;
   display: flex;
   flex-direction: column;
   gap: .3em;
@@ -374,17 +381,26 @@ p code {
   transition: color .1s linear;
 }
 
+#icons li > span {
+  width: 94px;
+  overflow: hidden;
+
+  white-space: nowrap;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
 #icons ul svg {
-  width: 64px;
-  height: 64px;
-  padding: 20px;
+  width: 94px;
+  height: 94px;
+  padding: 30px;
 
   background-color: var(--pos-color-content-background);
   border-radius: var(--pos-radius-panel);
 
   color: var(--pos-color-content-text);
 
-  transition: color .1s linear;
+  transition: color .1s linear, scale .2s var(--pos-transition-ui-detail);
 }
 
 #icons li:not(.styleguide-icon-copied):hover,
@@ -397,14 +413,22 @@ p code {
   color: var(--pos-color-confirmation);
 }
 
+  #icons .styleguide-icon-copied svg {
+    scale: .9;
+  }
+
 
 
 /* fonts
 ============================================================================ */
-#fonts p {
+#fonts p + p {
   margin-block-start: var(--pos-gap-text-text);
 
   line-height: 1.3em;
+}
+
+.styleguide-fonts-prose {
+  min-height: 7lh;
 }
 
 .styleguide-fonts-example {
@@ -609,6 +633,14 @@ p code {
     margin-inline-start: auto;
   }
 
+.styleguide-forms-placeholder-tag {
+  width: 80px;
+  height: 1.5rem;
+
+  background-color: var(--pos-color-highlight-background);
+  border-radius: var(--pos-radius-tag);
+}
+
 #forms .styleguide-details + p {
   margin-block-start: calc(var(--pos-gap-text-text) / 2);
 }
@@ -639,3 +671,48 @@ p code {
     
     border-inline-start: 3px dotted var(--pos-color-content-background);
   }
+
+
+/* spacings
+============================================================================ */
+.styleguide-spacings-example {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.styleguide-spacings-example:before {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  inset-inline-end: 2.2rem;
+  background: var(--pos-color-content-text);
+
+  clip-path: path('M12.25 2.94H14l-2-3-2 3h1.75V21H10l2 3 2-3h-1.75V2.94z');
+
+  content: '';
+}
+
+.styleguide-spacings-example-value {
+  padding: 2px 3px;
+  position: absolute;
+  inset-inline-end: .5rem;
+
+  background-color: var(--pos-color-content-text);
+  border-radius: var(--pos-radius-tag);
+
+  text-transform: uppercase;
+  font-size: .75rem;
+  color: var(--pos-color-content-background);
+}
+
+
+/* placeholders
+============================================================================ */
+.styleguide-placeholder-input {
+  height: var(--pos-height-input);
+
+  border-radius: var(--pos-radius-input);
+  background-color: var(--pos-color-highlight-background);
+}

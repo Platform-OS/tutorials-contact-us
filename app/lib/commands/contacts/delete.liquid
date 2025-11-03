@@ -1,0 +1,9 @@
+{% liquid
+  graphql r = 'contacts/delete', id: id
+  assign object = r.record_delete
+
+  assign event_object = '{}' | parse_json | hash_merge: id: id
+  function _ = 'modules/core/commands/events/publish', type: 'contact_deleted', object: event_object, delay: null, max_attempts: null
+
+  return object
+%}

@@ -1,0 +1,9 @@
+{% liquid
+  assign limit = limit | default: 20
+  assign page = params.page | to_positive_integer: 1
+  assign keyword = params.keyword | default: null
+
+  graphql res = 'contacts/search', per_page: limit, page: page, keyword: keyword
+
+  return res.records
+%}

@@ -1,0 +1,17 @@
+---
+slug: admin/contacts/:id
+method: delete
+---
+{% liquid
+  function current_profile = 'modules/user/helpers/current_profile'
+  # platformos-check-disable ConvertIncludeToRender, UnreachableCode
+
+  include 'modules/user/helpers/can_do_or_unauthorized', requester: current_profile, do: 'contacts.manage', redirect_anonymous_to_login: true, forbidden_partial: '403'
+  # platformos-check-enable ConvertIncludeToRender, UnreachableCode
+
+  function _ = 'commands/contacts/delete', id: context.params.id
+
+  render 'modules/core/helpers/flash/publish', notice: 'Contact has been successfully deleted', error: null, info: null
+  include 'modules/core/helpers/redirect_to', url: '/admin'
+%}
+

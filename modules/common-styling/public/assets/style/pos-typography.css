@@ -5,6 +5,7 @@
   links
   headings
   sidenotes
+  utility classes
   increasing text legibility
   long text
 */
@@ -77,6 +78,7 @@
     margin-inline-start: -.1ex;
     display: block;
 
+    line-height: 1.2;
     font-family: var(--pos-font-heading);
     font-size: 2rem;
     font-weight: 500;
@@ -99,6 +101,14 @@
     font-weight: 400;
   }
 
+  .pos-heading-3 + .pos-card {
+    margin-block-start: .3em;
+  }
+
+  .pos-card + .pos-heading-3 {
+    margin-block-start: var(--pos-gap-card-card);
+  }
+
 
   /* sidenotes
   ============================================================================ */
@@ -110,7 +120,7 @@
   /* tips
   ============================================================================ */
   .pos-tip {
-    margin-block-start: .5rem;
+    margin-block-start: .2rem;
     position: relative;
     display: flex;
     gap: .5em;
@@ -122,9 +132,16 @@
       width: 1.2rem;
       height: 1.2rem;
       position: relative;
-      top: 3px;
+      top: 2px;
       flex-shrink: 0;
     }
+
+
+  /* utility classes
+  ============================================================================ */
+  .pos-text-center {
+    text-align: center;
+  }
 
 
   /* increasing text legibility
@@ -155,8 +172,29 @@
 
   /* long text
   ============================================================================ */
+  .pos-prose .pos-heading-2 {
+    margin-block-end: .1em;
+  }
+
   .pos-prose .pos-heading-3 {
     margin-block-end: .5rem;
+  }
+
+  .pos-prose * + .pos-heading-3 {
+    margin-block-start: 1em;
+  }
+
+  .pos-prose p {
+    line-height: 1.4;
+  }
+
+  .pos-prose p + p {
+    margin-block-start: .5em;
+  }
+
+  .pos-prose * + ol,
+  .pos-prose * + ul {
+    margin-block-start: .5em;
   }
 
   .pos-prose ol {
