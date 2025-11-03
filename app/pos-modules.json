@@ -2,6 +2,7 @@
   "modules": {
     "core": "2.0.7",
     "common-styling": "1.32.0",
-    "user": "5.1.1"
+    "user": "5.1.1",
+    "openai": "1.1.0"
   }
 }
