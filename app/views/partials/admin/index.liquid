@@ -1,14 +1,4 @@
-<div class="pos-card">
-    <form method="GET" >
-      <fieldset class="pos-form-fieldset-combined">
-          <input type="text" name="keyword" placeholder="Search" class="pos-form-input" value="{{ context.params.keyword }}">
-        <button type="submit" class="pos-button">
-          <span class="pos-label">Search</span>
-          {% render 'modules/common-styling/icon', icon: 'search' %}
-        </button>
-      </fieldset>
-    </form>
-</div>
+{% render 'admin/contacts/nav' %}
 <h1 class="pos-heading-1">Contacts</h1>
 <section class="pos-table">
     <header>

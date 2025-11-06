@@ -1,0 +1,26 @@
+<div id="searches-nav">
+  <div class="pos-card">
+      <form action='/admin' method="GET" >
+        <fieldset class="pos-form-fieldset-combined">
+            <input type="text" name="keyword" placeholder="Search" class="pos-form-input" value="{{ context.params.keyword }}">
+          <button type="submit" class="pos-button">
+            <span class="pos-label">Search</span>
+            {% render 'modules/common-styling/icon', icon: 'search' %}
+          </button>
+        </fieldset>
+      </form>
+  </div>
+
+  <div class="pos-card">
+      <form action="/admin/contacts/ai_search" method="GET">
+        <fieldset class="pos-form-fieldset-combined">
+            <input type="text" name="query" placeholder="AI Search" class="pos-form-input" value="{{ context.params.query }}">
+          <button type="submit" class="pos-button">
+            <span class="pos-label">AI Search</span>
+            {% render 'modules/common-styling/icon', icon: 'search' %}
+          </button>
+        </fieldset>
+      </form>
+  </div>
+
+</div>

@@ -1,0 +1,9 @@
+{% liquid
+  if id == null
+    log "contacts/find requires ID", type: "ERROR"
+  endif
+
+  graphql res = 'contacts/find', id: id
+
+  return res.records.results.first
+%}

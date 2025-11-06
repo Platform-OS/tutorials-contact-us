@@ -1,0 +1,21 @@
+{% liquid
+  function contact = 'queries/contacts/find', id: event.id
+  log contact, type: 'contact'
+
+  function response = 'modules/openai/commands/openai/fetch_embeddings', object: contact.body
+  log response, type: 'response'
+
+  if response.error == blank
+    assign pos_embedding_input = '{}' | parse_json
+    assign metadata = '{}' | parse_json
+
+    hash_assign metadata['contact_id'] = contact.id
+    hash_assign pos_embedding_input['metadata'] = metadata
+    hash_assign pos_embedding_input['embedding'] = response.data.first.embedding
+    hash_assign pos_embedding_input['content'] = contact.body
+    function pos_embedding = 'modules/openai/commands/embeddings/create', object: pos_embedding_input
+    log pos_embedding, type: 'pos_embedding'
+  endif
+%}
+
+

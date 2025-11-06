@@ -1,0 +1,32 @@
+{% render 'admin/contacts/nav' %}
+
+<h1 class="pos-heading-1">AI Search results</h1>
+<div class="pos-card">
+  <p>OpenAI Response:</p>
+  <pre>
+    <code>
+      {{ response }}
+    </code>
+  </pre>
+</div>
+<section class="pos-table">
+    <header>
+        <div>ID</div>
+        <div>Body</div>
+    </header>
+    <div class="pos-table-content pos-card">
+
+    {% for embedding in embeddings.results %}
+            <ul>
+                <li>
+                    <span class="pos-table-content-heading">ID</span>
+                    {{ embedding.metadata.contact_id }}
+                </li>
+                <li>
+                    <span class="pos-table-content-heading">Body</span>
+                    <span title="{{ embedding.content }}">{{ embedding.content | truncate: 40 }}</span>
+                </li>
+            </ul>
+        {% endfor %}
+    </div>
+</section>

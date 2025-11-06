@@ -12,3 +12,10 @@
   column-gap: 20px;
   font-size: 16px;
 }
+
+#searches-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 20px;
+}

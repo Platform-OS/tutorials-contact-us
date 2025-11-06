@@ -1,0 +1,9 @@
+{% liquid
+  if context.params.query != blank
+    function response = 'modules/openai/commands/openai/fetch_embeddings', object: context.params.query
+
+    function related_embeddings = 'modules/openai/queries/embeddings/search', related_to: response.data.first.embedding, limit: 3, metadata: null
+  endif
+
+  render 'admin/contacts/ai_results', embeddings: related_embeddings, response: response
+%}
